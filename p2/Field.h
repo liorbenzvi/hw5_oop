@@ -2,6 +2,7 @@
 #ifndef FIELD_H_
 #define FIELD_H_
 #include "Exceptions.h"
+#include "Object.h"
 #include <string>
 
 class Field  {
