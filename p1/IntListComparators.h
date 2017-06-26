@@ -44,7 +44,7 @@ struct IntListsEqual<IntList<H1>, IntList<H2>> {
 
 template<int H1, int... RS1, int H2, int... RS2>
 struct IntListsEqual<IntList<H1,RS1...>,IntList<H2,RS2...>> {
-    typedef typename IntListsEqual<IntList<RS1...>, IntList<RS2...>>::value rest;
+    constexpr static bool rest = IntListsEqual<IntList<RS1...>, IntList<RS2...>>::value;
     constexpr static bool value = BOOL<(H1==H2), rest>::b ;
 };
 
