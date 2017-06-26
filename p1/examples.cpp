@@ -7,14 +7,7 @@
 using namespace std;
 
 int main() {
-//    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::head<<endl;
-//    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::next::head<<endl;
-//    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::next::next::head<<endl;
-//    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::next::next::next::head<<endl;
-//    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::next::next::next::next::head<<endl;
-//    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::next::next::next::next::next::head<<endl;
-    cout<<MergedIntLists<IntList<1>, IntList<>>::list::head<<endl;
-    cout<<MergedIntLists<IntList<>, IntList<1>>::list::head<<endl;
+    cout<<IntListsEqual<IntList<1, 2, 3>, IntList<1,2 ,3>>::value<<endl;
 
 
     //IntList<1, 2, 3>::head; // = 1
