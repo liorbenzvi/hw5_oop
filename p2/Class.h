@@ -1,11 +1,13 @@
 #ifndef CLASS_H_
 #define CLASS_H_
 
-
+#include<string>
 
 class Class{
 
 private:
+	Class* super_class;
+	std::string class_name;
 public:
 	Class(Class* c, const std::string& name);
 		
@@ -34,6 +36,10 @@ public:
 	Object* getObj(std::string name);
 
 	void setObj(std::string name, Object* value);
+	
+	std::string name() const;
+
+	static void setAccessible(bool flag);
 
 
 };

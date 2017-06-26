@@ -2,10 +2,14 @@
 #ifndef FIELD_H_
 #define FIELD_H_
 #include "Exceptions.h"
+#include <string>
 
 class Field  {
 private:
-
+	std::string field_name;
+	std::string class_name;
+	Type type;
+	bool is_static;
 public:
 	Field(std::string name, std::string className, Type t, bool isStatic);
 
