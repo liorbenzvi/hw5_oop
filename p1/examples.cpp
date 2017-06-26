@@ -5,7 +5,7 @@
 #include "IntListUtils.h"
 #include "IntListComparators.h"
 using namespace std;
-
+/*
 int main() {
     cout<<IntListsEqual<IntList<1, 2, 3>, IntList<1,2 ,3>>::value<<endl;
 
@@ -26,4 +26,4 @@ int main() {
 //	IntListContains<IntList<2, 3>, 2, 3>::value; // = true
 //	IntListIndexEquals<IntList<1, 2>, 0, 1>::value; // = true (index 0 contains 1)
 	return 0;
-}
+}*/
