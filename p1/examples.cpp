@@ -7,12 +7,15 @@
 using namespace std;
 
 int main() {
-    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::head<<endl;
-    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::next::head<<endl;
-    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::next::next::head<<endl;
-    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::next::next::next::head<<endl;
-    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::next::next::next::head<<endl;
-    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::next::next::next::next::head<<endl;
+//    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::head<<endl;
+//    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::next::head<<endl;
+//    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::next::next::head<<endl;
+//    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::next::next::next::head<<endl;
+//    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::next::next::next::next::head<<endl;
+//    cout<<MergedIntLists<IntList<1,9>, IntList<1,2,3,4>>::list::next::next::next::next::next::head<<endl;
+    cout<<MergedIntLists<IntList<1>, IntList<>>::list::head<<endl;
+    cout<<MergedIntLists<IntList<>, IntList<1>>::list::head<<endl;
+
 
     //IntList<1, 2, 3>::head; // = 1
 //	IntList<1, 2, 3>::next::next; // = IntList<3>

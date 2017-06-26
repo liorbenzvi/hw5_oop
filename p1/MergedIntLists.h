@@ -1,20 +1,32 @@
 #ifndef MERGEDLIST
 #define MERGEDLIST
+
+#include "ConcatedIntLists.h"
 #include "IntList.h"
 
-template<class L1, class L2>
-struct MergedIntLists<L1,L2>{
-    typedef IntList<typename L1::head, typename L2::head, MergedIntLists<typename L1::next, typename L2::next>::list> list;
-};
-
-template<class L1>
-struct MergedIntLists<L1>{
-    typedef L1 list;
-};
-
-template<>
-struct MergedIntLists<>{
+template<typename L1, typename L2>
+struct MergedIntLists {
     typedef IntList<> list;
 };
+
+template<int H1, int... RS1>
+struct MergedIntLists<IntList<>,IntList<H1,RS1...>> {
+    typedef IntList<H1,RS1...> list;
+
+};
+
+template<int H1, int... RS1>
+struct MergedIntLists<IntList<H1,RS1...>,IntList<>> {
+    typedef IntList<H1,RS1...> list;
+
+};
+
+template<int H1, int... RS1, int H2, int... RS2>
+struct MergedIntLists<IntList<H1,RS1...>,IntList<H2,RS2...>> {
+    typedef typename MergedIntLists<IntList<RS1...>,IntList<RS2...>>::list rest;
+    typedef typename ConcatedIntLists<IntList<H1,H2>,rest>::list list;
+
+};
+
 
 #endif // !MERGEDLIST
