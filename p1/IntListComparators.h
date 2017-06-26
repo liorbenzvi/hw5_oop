@@ -3,22 +3,22 @@
 #include "IntList.h"
 
 template<bool b1, bool b2>
-struct BOOL {
+struct AND {
     constexpr static bool b = true;
 };
 
 template<>
-struct BOOL<false, true> {
+struct AND<false, true> {
     constexpr static bool b = false;
 };
 
 template<>
-struct BOOL<true, false> {
+struct AND<true, false> {
     constexpr static bool b = false;
 };
 
 template<>
-struct BOOL<false, false> {
+struct AND<false, false> {
     constexpr static bool b = false;
 };
 
@@ -45,7 +45,7 @@ struct IntListsEqual<IntList<H1>, IntList<H2>> {
 template<int H1, int... RS1, int H2, int... RS2>
 struct IntListsEqual<IntList<H1,RS1...>,IntList<H2,RS2...>> {
     constexpr static bool rest = IntListsEqual<IntList<RS1...>, IntList<RS2...>>::value;
-    constexpr static bool value = BOOL<(H1==H2), rest>::b ;
+    constexpr static bool value = AND<(H1==H2), rest>::b ;
 };
 
 #endif // !INTLISTCOMPARATORS
