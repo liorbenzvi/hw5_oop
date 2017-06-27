@@ -23,6 +23,9 @@ public:
 	
 	std::string name() const;
 
+    Func getFunction();
+
+
 };
 
 

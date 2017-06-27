@@ -1,8 +1,8 @@
 
 #ifndef FIELD_H_
 #define FIELD_H_
+
 #include "Exceptions.h"
-#include "Object.h"
 #include <string>
 
 class Field  {
@@ -11,6 +11,7 @@ private:
 	std::string class_name;
 	Type type;
 	bool is_static;
+
 public:
 	Field(std::string name, std::string className, Type t, bool isStatic);
 

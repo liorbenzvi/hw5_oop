@@ -51,8 +51,7 @@ std::list<Field> Class::getFields(){
 	return res;
 }
 
-static bool Class::getAccessible(){
+bool Class::getAccessible(){
 	return accessible;
-
 }
 

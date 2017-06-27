@@ -6,11 +6,13 @@
 #include "Method.h"
 #include <string>
 #include <map>
-#include<list>
+#include <list>
 
-typedef std::map<std::string,Field> FieldMap;
-typedef std::map<std::string,Method> MethodMap;
-typedef std::map<std::string,Object*> ObjectMap;
+typedef std::map<std::string, Field> FieldMap;
+typedef std::map<std::string, Method> MethodMap;
+typedef std::map<std::string, Object*> ObjectMap;
+typedef std::map<std::string, int>  IntMap;
+typedef std::map<std::string, Object*>  ObjMap;
 
 class Class{
 
@@ -19,6 +21,8 @@ private:
 	std::string class_name;
 	bool accessible;
 	FieldMap static_fields;
+    IntMap static_int_values;
+    ObjMap static_obj_values;
 	FieldMap inst_fields;
 	MethodMap methods;
 	ObjectMap objects;
@@ -27,7 +31,7 @@ public:
 		
 	Class* getSuperClass();
 	
-	Object* newInstance();
+	Object* newInstance(); // the constructor expect map of all instanceFields (of class and all superClasses)
 
 	void addMethod(std::string name, Func func);
 	
@@ -43,7 +47,8 @@ public:
 
 	std::list<Method> getMethods();
 
-	int getInt(std::string name);
+	// only static fields (from FAQ) -  also should look for static fields at class and his superclasses.
+    int getInt(std::string name);
 
 	void setInt(std::string name, int value);
 
@@ -51,11 +56,17 @@ public:
 
 	void setObj(std::string name, Object* value);
 	
-	std::string name() const;
+
+    std::string name() const;
 
 	static void setAccessible(bool flag);
 
-	static bool getAccessible();
+    // Aid functions for object:
+
+    bool getAccessible();
+    // if the field doesn't exist return (-1) else return TYPE (should look for static fields at class and his superclasses)
+    int getStaticFieldType(std::string name);
+
 
 
 };

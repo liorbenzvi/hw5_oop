@@ -1,12 +1,24 @@
 #ifndef OBJECT_H_
 #define OBJECT_H_
 
+#include "Class.h"
 
+typedef std::map<std::string, int>  IntMap;
+typedef std::map<std::string, Object*>  ObjMap;
+
+using namespace std;
 
 class Object {
 private:
+    Class* my_class;
+    IntMap int_fields;
+    ObjMap obj_fields;
+
 
 public:
+	Object(Class* my_class, FieldMap fields);
+
+    ~Object();
 
 	Class* getClass();
 

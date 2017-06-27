@@ -17,3 +17,7 @@ void Method::invoke(Object* const obj){
 std::string Method::getDeclaringClass() const{
     return class_name;
 }
+
+Func Method::getFunction(){
+    return function_pointer;
+}
