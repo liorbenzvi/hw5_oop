@@ -1,7 +1,7 @@
-
-
 #include "Object.h"
-
+#include "Class.h"
+#include "Field.h"
+#include "Method.h"
 
 Object::Object(Class* my_class, FieldMap fields): my_class(my_class){
     for (map<string, Field>::iterator it = fields.begin(); it != fields.end(); ++it)
@@ -17,9 +17,7 @@ Object::Object(Class* my_class, FieldMap fields): my_class(my_class){
 Object::~Object() {
     my_class = nullptr;
     int_fields.clear();
-    delete(int_fields);
     obj_fields.clear();
-    delete(obj_fields);
 }
 
 Class* Object::getClass(){

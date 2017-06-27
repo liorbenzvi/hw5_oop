@@ -1,5 +1,5 @@
 #include "Field.h"
-
+#include "Object.h"
 using namespace std;
 
 Field::Field(string name, string className, Type t, bool isStatic) :

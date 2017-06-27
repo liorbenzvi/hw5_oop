@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Method.h"
+#include "Object.h"
 
 
 Method::Method(std::string name,std::string className,Func f):

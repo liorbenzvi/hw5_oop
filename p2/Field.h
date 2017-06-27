@@ -1,9 +1,9 @@
 
 #ifndef FIELD_H_
 #define FIELD_H_
-
-#include "Exceptions.h"
-#include <string>
+#include"Exceptions.h"
+#include<string>
+class Object;
 
 class Field  {
 private:
@@ -14,7 +14,7 @@ private:
 
 public:
 	Field(std::string name, std::string className, Type t, bool isStatic);
-
+	Field()=default;
 	Type getType();
 	
 	void setInt(Object* obj, int value);

@@ -2,8 +2,9 @@
 #ifndef METHOD_H_
 #define METHOD_H_
 
-#include"Object.h"
+#include "Exceptions.h"
 
+class Object;
 typedef void(*Func)(Object*);
 
 class Method{
@@ -18,7 +19,7 @@ public:
 
 	Method(std::string name,std::string className,Func f);
 
-
+	Method()=default;
 	virtual void invoke(Object* const obj);
 	
 	std::string name() const;
