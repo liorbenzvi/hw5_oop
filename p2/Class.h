@@ -1,10 +1,14 @@
 #ifndef CLASS_H_
 #define CLASS_H_
+
 #include <string>
 #include <map>
 #include <vector>
 #include <list>
-#include"Exceptions.h"
+
+#include "Exceptions.h"
+#include "Object.h"
+
 class Field;
 class Method;
 class Object;
@@ -17,11 +21,10 @@ typedef std::map<std::string, Object*>  ObjMap;
 
 
 class Class{
-
+    static bool accessible;
 private:
 	Class* super_class;
 	std::string class_name;
-	bool accessible;
 	FieldMap static_fields;
     IntMap static_int_values;
     ObjMap static_obj_values;
@@ -75,8 +78,7 @@ public:
     // if the field doesn't exist return (-1) else return TYPE (should look for static fields at class and his superclasses)
     int getStaticFieldType(std::string name);
 
-
-
 };
+
 
 #endif /* CLASS_H_ */

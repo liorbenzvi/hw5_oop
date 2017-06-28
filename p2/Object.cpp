@@ -1,9 +1,8 @@
-#include "Object.h"
-#include "Class.h"
-#include "Field.h"
-#include "Method.h"
 
-Object::Object(Class* my_class, FieldMap fields): my_class(my_class){
+#include "Object.h"
+
+
+Object::Object(Class* my_class, FieldMap fields): my_class(my_class), from_invoke(0){
     for (map<string, Field>::iterator it = fields.begin(); it != fields.end(); ++it)
     {
         if(it->second.getType() == INT){
@@ -27,7 +26,9 @@ Class* Object::getClass(){
 int Object::getInt(string name){
     if(int_fields.find(name) != int_fields.end()) {
         if(!my_class->getAccessible()){
-            throw FieldNotAccessible();
+            if(from_invoke == 0) {
+                throw FieldNotAccessible();
+            }
         }
         return int_fields[name];
     }
@@ -42,9 +43,6 @@ int Object::getInt(string name){
         throw TypeError();
     }
     if((Type)(static_field) == INT){
-        if(!my_class->getAccessible()){
-            throw FieldNotAccessible();
-        }
         return my_class->getInt(name);
     }
 }
@@ -55,7 +53,9 @@ Object* Object::getObj(string name){
     }
     if(obj_fields.find(name) != obj_fields.end()){
         if(!my_class->getAccessible()){
-            throw FieldNotAccessible();
+            if(from_invoke == 0) {
+                throw FieldNotAccessible();
+            }
         }
         return obj_fields[name];
     }
@@ -64,9 +64,6 @@ Object* Object::getObj(string name){
         throw FieldNotFound();
     }
     if((Type)(static_field) == OBJECT){
-        if(!my_class->getAccessible()){
-            throw FieldNotAccessible();
-        }
         return my_class->getObj(name);
     }
     if((Type)(static_field) == INT){
@@ -77,9 +74,12 @@ Object* Object::getObj(string name){
 void Object::setInt(string name, int value){
     if(int_fields.find(name) != int_fields.end()) {
         if(!my_class->getAccessible()){
-            throw FieldNotAccessible();
+            if(from_invoke == 0) {
+                throw FieldNotAccessible();
+            }
         }
         int_fields[name]= value;
+        return;
     }
     if(obj_fields.find(name) != obj_fields.end()){
         throw TypeError();
@@ -92,10 +92,8 @@ void Object::setInt(string name, int value){
         throw TypeError();
     }
     if((Type)(static_field) == INT){
-        if(!my_class->getAccessible()){
-            throw FieldNotAccessible();
-        }
-        return my_class->setInt(name, value);
+        my_class->setInt(name, value);
+        return;
     }
 }
 
@@ -105,19 +103,20 @@ void Object::setObj(string name, Object* value){
     }
     if(obj_fields.find(name) != obj_fields.end()){
         if(!my_class->getAccessible()){
-            throw FieldNotAccessible();
+            if(from_invoke == 0) {
+                throw FieldNotAccessible();
+            }
         }
         obj_fields[name] = value;
+        return;
     }
     int static_field = my_class->getStaticFieldType(name);
     if(static_field== -1){
         throw FieldNotFound();
     }
     if((Type)(static_field) == OBJECT){
-        if(!my_class->getAccessible()){
-            throw FieldNotAccessible();
-        }
-        return my_class->setObj(name, value);
+        my_class->setObj(name, value);
+        return;
     }
     if((Type)(static_field) == INT){
         throw TypeError();
@@ -136,7 +135,9 @@ bool Object::isKindOf(std::string c){
 }
 
 void Object::invokeMethod(string name){
+    from_invoke ++ ;
     Method method = my_class->getMethod(name);
     Func function = method.getFunction();
     function(this);
+    from_invoke --;
 }

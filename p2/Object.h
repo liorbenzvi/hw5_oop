@@ -1,10 +1,17 @@
 #ifndef OBJECT_H_
 #define OBJECT_H_
+
 #include <string>
 #include <map>
+
+#include "Class.h"
+#include "Field.h"
+#include "Method.h"
+
 class Class;
 class Field;
 class Object;
+
 typedef std::map<std::string, int>  IntMap;
 typedef std::map<std::string, Object*>  ObjMap;
 typedef std::map<std::string, Field> FieldMap;
@@ -17,12 +24,13 @@ private:
     Class* my_class;
     IntMap int_fields;
     ObjMap obj_fields;
+    int from_invoke;
 
 
 public:
 	Object(Class* my_class, FieldMap fields);
 
-    ~Object();
+	virtual ~Object();
 
 	Class* getClass();
 

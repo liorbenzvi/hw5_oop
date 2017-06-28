@@ -20,6 +20,9 @@ public:
 	Method(std::string name,std::string className,Func f);
 
 	Method()=default;
+
+	virtual ~Method() = default;
+
 	virtual void invoke(Object* const obj);
 	
 	std::string name() const;

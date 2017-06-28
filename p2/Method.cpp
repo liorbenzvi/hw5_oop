@@ -12,6 +12,9 @@ std::string Method::name() const{
 }
 
 void Method::invoke(Object* const obj){
+    if(obj == nullptr){
+        throw MethodNotFound();
+    }
     obj->invokeMethod(method_name);
 }
 

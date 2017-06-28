@@ -16,29 +16,41 @@ Type Field::getType(){
 
 void Field::setInt(Object* obj, int value){
 	if(type != INT){
-		throw new TypeError();
+		throw TypeError();
 	}
+    if(obj == nullptr){
+        throw FieldNotFound();
+    }
 	obj->setInt(field_name,value);
 }
 
 int Field::getInt(Object* obj){
 	if(type != INT){
-		throw new TypeError();
+		throw TypeError();
 	}
+	if(obj == nullptr){
+        throw FieldNotFound();
+    }
 	return obj->getInt(field_name);
 }
 
 Object* Field::getObj(Object* obj){
 	if(type != OBJECT){
-		throw new TypeError();
+		throw TypeError();
 	}
+    if(obj == nullptr){
+        throw FieldNotFound();
+    }
 	return obj->getObj(field_name);
 }
 
 void Field::setObj(Object* obj, Object* value){
 	if(type != OBJECT){
-		throw new TypeError();
+		throw TypeError();
 	}
+    if(obj == nullptr){
+        throw FieldNotFound();
+    }
 	obj->setObj(field_name,value);
 }
 string Field::getDeclaringClass() const{

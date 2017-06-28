@@ -1,12 +1,11 @@
+
+
 #include "Class.h"
-#include "Object.h"
-#include "Field.h"
-#include "Method.h"
+bool Class::accessible = false;
 
 Class::Class(Class* c, const std::string& name):
-		super_class(c),class_name(name),accessible(false),static_fields(),
+		super_class(c),class_name(name),static_fields(),
 		static_int_values(),static_obj_values(),inst_fields(),methods(),objects(){
-
 }
 
 FieldMap Class::getAllInstanceFields(){
@@ -16,7 +15,7 @@ FieldMap Class::getAllInstanceFields(){
 	}
 	if(super_class != nullptr){
 		FieldMap super_map = super_class->getAllInstanceFields();
-		map.insert(super_map.begin(),super_map.end());
+		map.insert(super_map.begin(), super_map.end());
 	}
 	return map;
 }
@@ -30,6 +29,12 @@ Object* Class::newInstance(){
 Class::~Class(){
 	for(auto& obj : objects)
 		delete obj;
+	super_class = nullptr;
+    static_fields.clear();
+    static_int_values.clear();
+    static_obj_values.clear();
+    inst_fields.clear();
+    methods.clear();
 }
 
 std::string Class::name()const{
@@ -43,12 +48,17 @@ Class* Class::getSuperClass(){
 
 void Class::addInstanceField(std::string name, Type t){
 	Field f(name,class_name,t,false);
-	inst_fields[name]=f;
+    inst_fields.insert(pair<string, Field>(name, f));
 }
 
 void Class::addStaticField(std::string name, Type t){
-	Field f(name,class_name,t,false);
-	inst_fields[name]=f;
+	Field f(name, class_name, t, true);
+    static_fields.insert(pair<string, Field>(name, f));
+    if(t == INT){
+        static_int_values.insert(pair<string, int>(name,0));
+    } else{
+        static_obj_values.insert(pair<string, Object*>(name, nullptr));
+    }
 }
 
 Method Class::getMethod(std::string name){
@@ -60,11 +70,11 @@ Method Class::getMethod(std::string name){
 }
 
 Field Class::getField(std::string name){
-	if(static_fields.find(name)!=static_fields.end())
+	if(static_fields.find(name) != static_fields.end())
 		return static_fields[name];
-	if(inst_fields.find(name)!=inst_fields.end())
+	if(inst_fields.find(name) != inst_fields.end())
 		return inst_fields[name];
-	if(super_class==nullptr)
+	if(super_class == nullptr)
 		throw FieldNotFound();
 	return super_class->getField(name);
 }
@@ -74,6 +84,9 @@ std::list<Field> Class::getFields(){
 	for(auto& kv : static_fields){
 		res.push_back(kv.second);
 	}
+    for(auto& kv : inst_fields){
+        res.push_back(kv.second);
+    }
 	if(super_class == nullptr)
 		return res;
 	std::list<Field> super_res = super_class->getFields();
@@ -101,7 +114,7 @@ int Class::getInt(std::string name){
 	}
 
 	if(super_class == nullptr)
-		throw new FieldNotFound;
+		throw FieldNotFound();
 	return super_class->getInt(name);
 }
 
@@ -109,11 +122,12 @@ void Class::setInt(std::string name, int value){
 	if(static_fields.find(name)!= static_fields.end()){
 		if(static_fields[name].getType()!= INT)
 			throw TypeError();
-		static_int_values[name]=value;
+		static_int_values[name] = value;
+        return;
 	}
 
 	if(super_class == nullptr)
-		throw new FieldNotFound;
+		throw FieldNotFound();
 	 super_class->setInt(name,value);
 }
 
@@ -123,9 +137,8 @@ Object* Class::getObj(std::string name){
 			throw TypeError();
 		return static_obj_values[name];
 	}
-
 	if(super_class == nullptr)
-		throw new FieldNotFound;
+		throw FieldNotFound();
 	return super_class->getObj(name);
 }
 
@@ -133,11 +146,12 @@ void Class::setObj(std::string name, Object* value){
 	if(static_fields.find(name)!= static_fields.end()){
 		if(static_fields[name].getType()!= OBJECT)
 			throw TypeError();
-		static_obj_values[name]=value;
+		static_obj_values[name] = value;
+        return;
 	}
 
 	if(super_class == nullptr)
-		throw new FieldNotFound;
+		throw FieldNotFound();
 	 super_class->setObj(name,value);
 }
 
@@ -155,6 +169,10 @@ int Class::getStaticFieldType(std::string name){
 
 void Class::addMethod(std::string name, Func func){
 	Method me(name,class_name,func);
-	methods[name] = me;
+	methods.insert(pair<string, Method>(name, me));
+}
+
+void Class::setAccessible(bool flag){
+    accessible = flag;
 }
 
